@@ -129,43 +129,69 @@ export function CustomizationPanel() {
     onSaturationChange: (value: number) => void;
     onLightnessChange: (value: number) => void;
   }) => (
-    <div className="space-y-3">
+    <div className="space-y-3 p-3 rounded-lg"
+         style={{ backgroundColor: 'var(--ui-surface)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-ui-text-primary">{label}</span>
-        <div 
-          className="w-6 h-6 rounded border-2 border-ui-border"
-          style={{ backgroundColor: `hsl(${hue}, ${saturation}%, ${lightness}%)` }}
-        />
+        <span className="text-sm font-medium"
+              style={{ color: 'var(--ui-text-primary)' }}>
+          {label}
+        </span>
+        <div className="flex items-center gap-2">
+          <div 
+            className="w-8 h-8 rounded-lg border-2 shadow-sm ui-transition hover:scale-110"
+            style={{ 
+              backgroundColor: `hsl(${hue}, ${saturation}%, ${lightness}%)`,
+              borderColor: 'var(--ui-border)'
+            }}
+          />
+          <span className="text-xs font-mono px-2 py-1 rounded"
+                style={{ 
+                  backgroundColor: 'var(--ui-background)',
+                  color: 'var(--ui-text-secondary)',
+                  border: '1px solid var(--ui-border)'
+                }}>
+            {hue}°, {saturation}%, {lightness}%
+          </span>
+        </div>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-3">
         <div>
-          <label className="text-xs text-ui-text-secondary">Hue: {hue}°</label>
+          <label className="text-xs font-medium block mb-1"
+                 style={{ color: 'var(--ui-text-secondary)' }}>
+            Hue: {hue}°
+          </label>
           <Slider
             value={[hue]}
             onValueChange={([value]) => onHueChange(value)}
             max={360}
             step={1}
-            className="mt-1"
+            className="ui-transition"
           />
         </div>
         <div>
-          <label className="text-xs text-ui-text-secondary">Saturation: {saturation}%</label>
+          <label className="text-xs font-medium block mb-1"
+                 style={{ color: 'var(--ui-text-secondary)' }}>
+            Saturation: {saturation}%
+          </label>
           <Slider
             value={[saturation]}
             onValueChange={([value]) => onSaturationChange(value)}
             max={100}
             step={1}
-            className="mt-1"
+            className="ui-transition"
           />
         </div>
         <div>
-          <label className="text-xs text-ui-text-secondary">Lightness: {lightness}%</label>
+          <label className="text-xs font-medium block mb-1"
+                 style={{ color: 'var(--ui-text-secondary)' }}>
+            Lightness: {lightness}%
+          </label>
           <Slider
             value={[lightness]}
             onValueChange={([value]) => onLightnessChange(value)}
             max={100}
             step={1}
-            className="mt-1"
+            className="ui-transition"
           />
         </div>
       </div>
@@ -177,7 +203,11 @@ export function CustomizationPanel() {
       {/* Toggle Button */}
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 right-4 z-50 bg-ui-primary text-white shadow-lg hover:scale-105 ui-transition"
+        className="fixed top-4 right-4 z-50 shadow-xl ui-transition-fast hover:scale-110"
+        style={{ 
+          backgroundColor: 'var(--ui-primary)',
+          color: 'var(--ui-primary-foreground)'
+        }}
         size="icon"
       >
         <Settings className="h-4 w-4" />
@@ -185,21 +215,32 @@ export function CustomizationPanel() {
 
       {/* Panel Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 ui-transition">
-          <div className="fixed right-0 top-0 h-full w-80 bg-ui-surface-elevated border-l border-ui-border shadow-2xl overflow-y-auto">
-            <Card className="h-full rounded-none border-0">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 animate-fade-in">
+          <div className="fixed right-0 top-0 h-full w-80 shadow-2xl overflow-y-auto animate-slide-in-right"
+               style={{ 
+                 backgroundColor: 'var(--ui-surface-elevated)',
+                 borderLeft: '1px solid var(--ui-border)'
+               }}>
+            <Card className="h-full rounded-none border-0" style={{ backgroundColor: 'transparent' }}>
               {/* Header */}
-              <div className="sticky top-0 bg-ui-surface-elevated border-b border-ui-border p-4 flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-ui-text-primary flex items-center gap-2">
+              <div className="sticky top-0 p-4 flex items-center justify-between border-b"
+                   style={{ 
+                     backgroundColor: 'var(--ui-surface-elevated)',
+                     borderBottomColor: 'var(--ui-border)',
+                     color: 'var(--ui-text-primary)'
+                   }}>
+                <h2 className="text-lg font-semibold flex items-center gap-2">
                   <Palette className="h-5 w-5" />
-                  Customize
+                  Customize Theme
                 </h2>
                 <div className="flex gap-2">
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={resetTheme}
-                    className="text-ui-text-secondary hover:text-ui-text-primary"
+                    className="ui-transition-fast hover:scale-105"
+                    style={{ color: 'var(--ui-text-secondary)' }}
+                    title="Reset to Default"
                   >
                     <RotateCcw className="h-4 w-4" />
                   </Button>
@@ -207,7 +248,9 @@ export function CustomizationPanel() {
                     variant="ghost"
                     size="icon"
                     onClick={() => setIsOpen(false)}
-                    className="text-ui-text-secondary hover:text-ui-text-primary"
+                    className="ui-transition-fast hover:scale-105"
+                    style={{ color: 'var(--ui-text-secondary)' }}
+                    title="Close Panel"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -215,11 +258,15 @@ export function CustomizationPanel() {
               </div>
 
               {/* Content */}
-              <div className="p-4 space-y-6">
+              <div className="p-4 space-y-6" style={{ color: 'var(--ui-text-primary)' }}>
                 {/* Dark Mode */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    {theme.darkMode ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                <div className="flex items-center justify-between p-3 rounded-lg"
+                     style={{ backgroundColor: 'var(--ui-surface)' }}>
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg"
+                         style={{ backgroundColor: 'var(--ui-primary)', color: 'var(--ui-primary-foreground)' }}>
+                      {theme.darkMode ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                    </div>
                     <span className="text-sm font-medium">Dark Mode</span>
                   </div>
                   <Switch
@@ -228,148 +275,194 @@ export function CustomizationPanel() {
                   />
                 </div>
 
-                <Separator />
+                <Separator style={{ backgroundColor: 'var(--ui-border)' }} />
 
                 {/* Colors */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-semibold text-ui-text-primary flex items-center gap-2">
-                    <Palette className="h-4 w-4" />
+                  <h3 className="text-sm font-semibold flex items-center gap-2"
+                      style={{ color: 'var(--ui-text-primary)' }}>
+                    <div className="p-1 rounded"
+                         style={{ backgroundColor: 'var(--ui-accent)', color: 'var(--ui-accent-foreground)' }}>
+                      <Palette className="h-4 w-4" />
+                    </div>
                     Colors
                   </h3>
                   
-                  <ColorPicker
-                    label="Primary"
-                    hue={theme.primaryH}
-                    saturation={theme.primaryS}
-                    lightness={theme.primaryL}
-                    onHueChange={(value) => updateTheme('primaryH', value)}
-                    onSaturationChange={(value) => updateTheme('primaryS', value)}
-                    onLightnessChange={(value) => updateTheme('primaryL', value)}
-                  />
-                  
-                  <ColorPicker
-                    label="Secondary"
-                    hue={theme.secondaryH}
-                    saturation={theme.secondaryS}
-                    lightness={theme.secondaryL}
-                    onHueChange={(value) => updateTheme('secondaryH', value)}
-                    onSaturationChange={(value) => updateTheme('secondaryS', value)}
-                    onLightnessChange={(value) => updateTheme('secondaryL', value)}
-                  />
-                  
-                  <ColorPicker
-                    label="Accent"
-                    hue={theme.accentH}
-                    saturation={theme.accentS}
-                    lightness={theme.accentL}
-                    onHueChange={(value) => updateTheme('accentH', value)}
-                    onSaturationChange={(value) => updateTheme('accentS', value)}
-                    onLightnessChange={(value) => updateTheme('accentL', value)}
-                  />
+                  <div className="space-y-4">
+                    <ColorPicker
+                      label="Primary"
+                      hue={theme.primaryH}
+                      saturation={theme.primaryS}
+                      lightness={theme.primaryL}
+                      onHueChange={(value) => updateTheme('primaryH', value)}
+                      onSaturationChange={(value) => updateTheme('primaryS', value)}
+                      onLightnessChange={(value) => updateTheme('primaryL', value)}
+                    />
+                    
+                    <ColorPicker
+                      label="Secondary"
+                      hue={theme.secondaryH}
+                      saturation={theme.secondaryS}
+                      lightness={theme.secondaryL}
+                      onHueChange={(value) => updateTheme('secondaryH', value)}
+                      onSaturationChange={(value) => updateTheme('secondaryS', value)}
+                      onLightnessChange={(value) => updateTheme('secondaryL', value)}
+                    />
+                    
+                    <ColorPicker
+                      label="Accent"
+                      hue={theme.accentH}
+                      saturation={theme.accentS}
+                      lightness={theme.accentL}
+                      onHueChange={(value) => updateTheme('accentH', value)}
+                      onSaturationChange={(value) => updateTheme('accentS', value)}
+                      onLightnessChange={(value) => updateTheme('accentL', value)}
+                    />
+                  </div>
                 </div>
 
-                <Separator />
+                <Separator style={{ backgroundColor: 'var(--ui-border)' }} />
 
                 {/* Typography */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-semibold text-ui-text-primary flex items-center gap-2">
-                    <Type className="h-4 w-4" />
+                  <h3 className="text-sm font-semibold flex items-center gap-2"
+                      style={{ color: 'var(--ui-text-primary)' }}>
+                    <div className="p-1 rounded"
+                         style={{ backgroundColor: 'var(--ui-info)', color: 'white' }}>
+                      <Type className="h-4 w-4" />
+                    </div>
                     Typography
                   </h3>
                   
-                  <div>
-                    <label className="text-sm font-medium text-ui-text-primary">Font Family</label>
-                    <Select value={theme.fontFamily} onValueChange={(value) => updateTheme('fontFamily', value)}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Inter">Inter</SelectItem>
-                        <SelectItem value="Roboto">Roboto</SelectItem>
-                        <SelectItem value="Poppins">Poppins</SelectItem>
-                        <SelectItem value="Montserrat">Montserrat</SelectItem>
-                        <SelectItem value="Open Sans">Open Sans</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium text-ui-text-primary">Font Size: {theme.fontSize}px</label>
-                    <Slider
-                      value={[theme.fontSize]}
-                      onValueChange={([value]) => updateTheme('fontSize', value)}
-                      min={12}
-                      max={20}
-                      step={1}
-                      className="mt-2"
-                    />
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium block mb-2"
+                             style={{ color: 'var(--ui-text-primary)' }}>
+                        Font Family
+                      </label>
+                      <Select value={theme.fontFamily} onValueChange={(value) => updateTheme('fontFamily', value)}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Inter">Inter</SelectItem>
+                          <SelectItem value="Roboto">Roboto</SelectItem>
+                          <SelectItem value="Poppins">Poppins</SelectItem>
+                          <SelectItem value="Montserrat">Montserrat</SelectItem>
+                          <SelectItem value="Open Sans">Open Sans</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium block mb-2"
+                             style={{ color: 'var(--ui-text-primary)' }}>
+                        Font Size: <span style={{ color: 'var(--ui-primary)' }}>{theme.fontSize}px</span>
+                      </label>
+                      <Slider
+                        value={[theme.fontSize]}
+                        onValueChange={([value]) => updateTheme('fontSize', value)}
+                        min={12}
+                        max={20}
+                        step={1}
+                        className="ui-transition"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <Separator />
+                <Separator style={{ backgroundColor: 'var(--ui-border)' }} />
 
                 {/* Layout */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-semibold text-ui-text-primary flex items-center gap-2">
-                    <Zap className="h-4 w-4" />
-                    Layout
+                  <h3 className="text-sm font-semibold flex items-center gap-2"
+                      style={{ color: 'var(--ui-text-primary)' }}>
+                    <div className="p-1 rounded"
+                         style={{ backgroundColor: 'var(--ui-warning)', color: 'white' }}>
+                      <Zap className="h-4 w-4" />
+                    </div>
+                    Layout & Effects
                   </h3>
                   
-                  <div>
-                    <label className="text-sm font-medium text-ui-text-primary">Border Radius: {theme.radius}px</label>
-                    <Slider
-                      value={[theme.radius]}
-                      onValueChange={([value]) => updateTheme('radius', value)}
-                      min={0}
-                      max={20}
-                      step={1}
-                      className="mt-2"
-                    />
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium block mb-2"
+                             style={{ color: 'var(--ui-text-primary)' }}>
+                        Border Radius: <span style={{ color: 'var(--ui-primary)' }}>{theme.radius}px</span>
+                      </label>
+                      <Slider
+                        value={[theme.radius]}
+                        onValueChange={([value]) => updateTheme('radius', value)}
+                        min={0}
+                        max={20}
+                        step={1}
+                        className="ui-transition"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium block mb-2"
+                             style={{ color: 'var(--ui-text-primary)' }}>
+                        Spacing: <span style={{ color: 'var(--ui-primary)' }}>{theme.spacing}px</span>
+                      </label>
+                      <Slider
+                        value={[theme.spacing]}
+                        onValueChange={([value]) => updateTheme('spacing', value)}
+                        min={8}
+                        max={32}
+                        step={2}
+                        className="ui-transition"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium block mb-2"
+                             style={{ color: 'var(--ui-text-primary)' }}>
+                        Scale: <span style={{ color: 'var(--ui-primary)' }}>{theme.scale}x</span>
+                      </label>
+                      <Slider
+                        value={[theme.scale]}
+                        onValueChange={([value]) => updateTheme('scale', value)}
+                        min={0.8}
+                        max={1.2}
+                        step={0.05}
+                        className="ui-transition"
+                      />
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 rounded-lg"
+                         style={{ backgroundColor: 'var(--ui-surface)' }}>
+                      <span className="text-sm font-medium">Box Shadows</span>
+                      <Switch
+                        checked={theme.shadowEnabled}
+                        onCheckedChange={(checked) => updateTheme('shadowEnabled', checked)}
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium block mb-2"
+                             style={{ color: 'var(--ui-text-primary)' }}>
+                        Animation Speed: <span style={{ color: 'var(--ui-primary)' }}>{theme.transition}ms</span>
+                      </label>
+                      <Slider
+                        value={[theme.transition]}
+                        onValueChange={([value]) => updateTheme('transition', value)}
+                        min={100}
+                        max={500}
+                        step={25}
+                        className="ui-transition"
+                      />
+                    </div>
                   </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium text-ui-text-primary">Spacing: {theme.spacing}px</label>
-                    <Slider
-                      value={[theme.spacing]}
-                      onValueChange={([value]) => updateTheme('spacing', value)}
-                      min={8}
-                      max={32}
-                      step={2}
-                      className="mt-2"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium text-ui-text-primary">Scale: {theme.scale}x</label>
-                    <Slider
-                      value={[theme.scale]}
-                      onValueChange={([value]) => updateTheme('scale', value)}
-                      min={0.8}
-                      max={1.2}
-                      step={0.05}
-                      className="mt-2"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-ui-text-primary">Box Shadows</span>
-                    <Switch
-                      checked={theme.shadowEnabled}
-                      onCheckedChange={(checked) => updateTheme('shadowEnabled', checked)}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium text-ui-text-primary">Animation Speed: {theme.transition}ms</label>
-                    <Slider
-                      value={[theme.transition]}
-                      onValueChange={([value]) => updateTheme('transition', value)}
-                      min={100}
-                      max={500}
-                      step={25}
-                      className="mt-2"
-                    />
-                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="pt-4 border-t text-center"
+                     style={{ borderTopColor: 'var(--ui-border)' }}>
+                  <p className="text-xs opacity-75"
+                     style={{ color: 'var(--ui-text-secondary)' }}>
+                    🎨 Live Theme Customization
+                  </p>
                 </div>
               </div>
             </Card>
