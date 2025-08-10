@@ -2,95 +2,208 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Comprehensive UI Kit Design System with CSS Variables for Live Customization */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Core Theme Colors - Customizable */
+    --ui-primary-h: 217;
+    --ui-primary-s: 91%;
+    --ui-primary-l: 60%;
+    --ui-primary: hsl(var(--ui-primary-h) var(--ui-primary-s) var(--ui-primary-l));
+    --ui-primary-foreground: hsl(0 0% 100%);
+    
+    --ui-secondary-h: 210;
+    --ui-secondary-s: 20%;
+    --ui-secondary-l: 94%;
+    --ui-secondary: hsl(var(--ui-secondary-h) var(--ui-secondary-s) var(--ui-secondary-l));
+    --ui-secondary-foreground: hsl(222 47% 11%);
+    
+    --ui-accent-h: 142;
+    --ui-accent-s: 71%;
+    --ui-accent-l: 45%;
+    --ui-accent: hsl(var(--ui-accent-h) var(--ui-accent-s) var(--ui-accent-l));
+    --ui-accent-foreground: hsl(0 0% 100%);
+    
+    /* Background & Surfaces */
+    --ui-background: hsl(0 0% 100%);
+    --ui-surface: hsl(0 0% 98%);
+    --ui-surface-elevated: hsl(0 0% 100%);
+    
+    /* Text Colors */
+    --ui-text-primary: hsl(222 84% 5%);
+    --ui-text-secondary: hsl(215 16% 47%);
+    --ui-text-muted: hsl(210 11% 71%);
+    
+    /* Borders & Dividers */
+    --ui-border: hsl(214 32% 91%);
+    --ui-border-focus: var(--ui-primary);
+    
+    /* Status Colors */
+    --ui-success: hsl(142 71% 45%);
+    --ui-warning: hsl(38 92% 50%);
+    --ui-error: hsl(0 84% 60%);
+    --ui-info: hsl(199 89% 48%);
+    
+    /* Customizable Properties */
+    --ui-radius: 8px;
+    --ui-radius-sm: 4px;
+    --ui-radius-lg: 12px;
+    --ui-radius-xl: 16px;
+    
+    --ui-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --ui-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --ui-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --ui-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --ui-shadow-enabled: 1;
+    
+    --ui-spacing-xs: 4px;
+    --ui-spacing-sm: 8px;
+    --ui-spacing: 16px;
+    --ui-spacing-lg: 24px;
+    --ui-spacing-xl: 32px;
+    --ui-spacing-2xl: 48px;
+    
+    --ui-font-size-xs: 12px;
+    --ui-font-size-sm: 14px;
+    --ui-font-size: 16px;
+    --ui-font-size-lg: 18px;
+    --ui-font-size-xl: 20px;
+    --ui-font-size-2xl: 24px;
+    --ui-font-size-3xl: 30px;
+    --ui-font-size-4xl: 36px;
+    
+    --ui-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --ui-font-family-mono: 'Fira Code', 'SF Mono', Consolas, monospace;
+    
+    --ui-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --ui-transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --ui-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --ui-scale: 1;
+    
+    /* Gradients */
+    --ui-gradient-primary: linear-gradient(135deg, var(--ui-primary), hsl(var(--ui-primary-h) var(--ui-primary-s) calc(var(--ui-primary-l) - 10%)));
+    --ui-gradient-accent: linear-gradient(135deg, var(--ui-accent), hsl(var(--ui-accent-h) var(--ui-accent-s) calc(var(--ui-accent-l) - 10%)));
+    --ui-gradient-surface: linear-gradient(145deg, var(--ui-surface), hsl(0 0% 96%));
+    
+    /* Shadcn compatibility */
+    --background: var(--ui-background);
+    --foreground: var(--ui-text-primary);
+    --card: var(--ui-surface-elevated);
+    --card-foreground: var(--ui-text-primary);
+    --popover: var(--ui-surface-elevated);
+    --popover-foreground: var(--ui-text-primary);
+    --primary: var(--ui-primary);
+    --primary-foreground: var(--ui-primary-foreground);
+    --secondary: var(--ui-secondary);
+    --secondary-foreground: var(--ui-secondary-foreground);
+    --muted: var(--ui-secondary);
+    --muted-foreground: var(--ui-text-secondary);
+    --accent: var(--ui-accent);
+    --accent-foreground: var(--ui-accent-foreground);
+    --destructive: var(--ui-error);
+    --destructive-foreground: hsl(0 0% 100%);
+    --border: var(--ui-border);
+    --input: var(--ui-border);
+    --ring: var(--ui-border-focus);
+    --radius: var(--ui-radius);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --ui-background: hsl(222 84% 5%);
+    --ui-surface: hsl(222 47% 7%);
+    --ui-surface-elevated: hsl(222 47% 9%);
+    
+    --ui-text-primary: hsl(210 40% 98%);
+    --ui-text-secondary: hsl(215 20% 65%);
+    --ui-text-muted: hsl(217 33% 45%);
+    
+    --ui-border: hsl(217 33% 17%);
+    
+    --ui-secondary: hsl(217 33% 17%);
+    --ui-secondary-foreground: hsl(210 40% 98%);
+    
+    --ui-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --ui-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+    --ui-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+    --ui-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+    
+    --ui-gradient-surface: linear-gradient(145deg, var(--ui-surface), hsl(222 47% 6%));
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--ui-surface);
+    border-radius: var(--ui-radius);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--ui-border);
+    border-radius: var(--ui-radius);
+    transition: var(--ui-transition);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ui-text-muted);
+  }
+}
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+@layer base {
+  * {
+    @apply border-border;
+  }
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--ui-font-family);
+    font-size: var(--ui-font-size);
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.3;
+  }
+}
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+/* Utility Classes */
+@layer utilities {
+  .ui-shadow {
+    box-shadow: calc(var(--ui-shadow-enabled) * var(--ui-shadow));
+  }
+  
+  .ui-shadow-sm {
+    box-shadow: calc(var(--ui-shadow-enabled) * var(--ui-shadow-sm));
+  }
+  
+  .ui-shadow-lg {
+    box-shadow: calc(var(--ui-shadow-enabled) * var(--ui-shadow-lg));
+  }
+  
+  .ui-shadow-xl {
+    box-shadow: calc(var(--ui-shadow-enabled) * var(--ui-shadow-xl));
+  }
+  
+  .ui-transition {
+    transition: var(--ui-transition);
+  }
+  
+  .ui-transition-fast {
+    transition: var(--ui-transition-fast);
+  }
+  
+  .ui-transition-slow {
+    transition: var(--ui-transition-slow);
+  }
+  
+  .ui-scale {
+    transform: scale(var(--ui-scale));
   }
 }
 
